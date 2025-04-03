@@ -1,0 +1,52 @@
+CREATE TABLE PlanSuscripcion (
+    id_plan INT(4) AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    costo DECIMAL(4,2) NOT NULL,
+    tieneAnuncios VARCHAR(50) NOT NULL
+);
+
+INSERT INTO PlanSuscripcion (tipo, costo, tieneAnuncios) VALUES
+('Gratis', 0, si),
+('Premium', 19.99, no),
+('VIP', 29.99, no);
+
+CREATE TABLE Usuario (
+    id_usuario INT(4) AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    id_plan INT(4),
+    FOREIGN KEY (id_plan) REFERENCES PlanSuscripcion(id_plan) ON DELETE SET NULL
+);
+
+INSERT INTO Usuario (nombre, email, contraseña, id_plan) VALUES
+('Juan Perez', 'juan@example.com', 'securepassword123', 1),
+('Maria Lopez', 'maria@example.com', 'mypassword456', 2),
+('Carlos Gomez', 'carlos@example.com', 'password789', 2);
+
+CREATE TABLE GestorPlanes (
+    id INT(4) AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Habito (
+    id_habito INT(4) AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    frecuencia VARCHAR(50) NOT NULL,
+    id_usuario INT(4),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
+);
+
+INSERT INTO Habito (nombre, frecuencia, id_usuario) VALUES
+('Ejercicio', 'Diario', 1),
+('Lectura', 'Semanal', 2),
+('Meditacion', 'Diario', 3);
+
+CREATE TABLE RachaUso (
+    id INT(4) AUTO_INCREMENT PRIMARY KEY,
+    diasSiguidos INT(4) NOT NULL
+);
+
+INSERT INTO RachaUso (diasSiguidos) VALUES
+(5),
+(10),
+(15);
